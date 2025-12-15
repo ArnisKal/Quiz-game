@@ -60,17 +60,17 @@ function checkAnsw(){
     let q = myQuestions[questionIndex];
     show.innerHTML = q.question;
 
-    Object.entries('answers').forEach(([letter,text])) =>  {
+    Object.entries(q.answers).forEach(([letter,text]) =>  {
         const but = document.getElementById(letter);
         but.innerHTML = text;
         but.dataset.correct = q.correctAnsw === letter;
-    };
+    });
 }
 
-document.getElementById("btn").addEventListener("click", function(e) {
-    const tgt = e.target;
-    if(tgt.type && tgt.type === "button") {
-        document.getElementById("result").innerText = tgt.dataset.correct === "true"
-    ? "Correct" : "Incorrect";
-    }
+document.getElementById("next").addEventListener("click", function (e) {
+  const tgt = e.target;
+  if (tgt.tagName === "button") {
+    document.getElementById("result").innerText =
+      tgt.dataset.correct === "true" ? "Correct" : "Incorrect";
+  }
 });
