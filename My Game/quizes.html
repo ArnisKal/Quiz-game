@@ -6,35 +6,35 @@
     <title>Quizes</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
-    <script src="main.js"></script>
+    <script src="main.js" defer></script>
 </head>
 <body class="quiz_body">
 
-    <div class="quiz_main">
-        <div class="question_header" id="q1">
-            <h1>What is this game?</h1>
-            <button type="button" class="return_btn">
-                <i class="fa-solid fa-arrow-left"></i>Return back
-            </button>
+        <div class="quiz_main">
+            <div class="question_header" id="q1">
+                <div id="answer" class="questions">
+                    </div>
+            </div>
         </div>
-    </div>
 
-    <div class="first_img" id="question">
-        <img src="dota-2-logo-png_seeklogo-284923.png" width="140px" height="140px">
-    </div>
 
-    <div id="answer">
+        <div id="safeTimer" class="timer">
+                    <p id="safeTimerDisplay">00:30</p>
+                </div>
 
-    </div>
+        <div class="first_img" id="question">
+            <img src="dota-2-logo-png_seeklogo-284923.png" width="140px" height="140px">
+        </div>
 
-    <div>
-        <button id="a" onclick="answer(1, 'Minecraft')" class="quest_btn_1">Minecraft</button>
-        <button id="b" onclick="answer(1, 'RDR2')" class="quest_btn_2">RDR2</button>
-        <button id="c" onclick="answer(1, 'League of legends')" class="quest_btn_3">League of legends</button>
-        <button id="d" onclick="answer(1, 'Dota 2')" class="quest_btn_4">Dota 2</button>
-    </div>
     
-    <button type="button" id="next">Next</button>
+    <div class="answers">
+        <button id="a" class="quest_btn_1">Minecraft</button>
+        <button id="b" class="quest_btn_2">RDR2</button>
+        <button id="c" class="quest_btn_3">League of Legend</button>
+        <button id="d" class="quest_btn_4">Dota 2</button>
+    </div>
+
+    <div id="result"></div>
     
 </body>
 </html>

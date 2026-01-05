@@ -1,3 +1,4 @@
+//Page loading things
 document.addEventListener("DOMContentLoaded", () => {
     const page = document.getElementById("page");
     const buttons = document.querySelectorAll(".nav_buttons .btn");
@@ -45,32 +46,170 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 //Correct answers things
+let questionIndex = 0;
 
-let myQuestions = [
-    {
-       question: "What is this game?",
-       answer: {a:"Minecraft", b:"RDR2", c:"League of Legends", d:"Dota 2", correctAnsw: "d"}, 
-    },
-]
+const myQuestions = [
+  {
+    question: "What is this game?",
+    image: "dota-2-logo-png_seeklogo-284923.png",
+    correctAnsw: "d",
+    answers: {
+      a: "Minecraft",
+      b: "RDR2",
+      c: "League of Legends",
+      d: "Dota 2"
+    }
+  },
+  {
+    question: "From which game is this meme?",
+    image: "my-summer-car-car.gif",
+    correctAnsw: "b",
+    answers: {
+      a: "CS2",
+      b: "My Summer Car",
+      c: "Dead by Daylight",
+      d: "GTA V"
+    }
+  },
+  {
+    question: "Who is this?",
+    image: "Trevy.jpg",
+    correctAnsw: "d",
+    answers: {
+      a: "Franklin",
+      b: "Homer",
+      c: "Pablo",
+      d: "Trevor"
+    }
+  },
+   {
+    question: "Who is this?",
+    image: "CakeBaker.png",
+    correctAnsw: "d",
+    answers: {
+      a: "Postal Dude",
+      b: "Santa Claus",
+      c: "",
+      d: "CakeBaker"
+    }
+  },
+   {
+    question: "What is this game?",
+    image: "CS2.jpg",
+    correctAnsw: "a",
+    answers: {
+      a: "CS2",
+      b: "Fortnite",
+      c: "Resident evil",
+      d: "Diablo 3"
+    }
+  },
+   {
+    question: "Who is this?",
+    image: "Michael.jpg",
+    correctAnsw: "c",
+    answers: {
+      a: "Terminator",
+      b: "Freddy Fazbear",
+      c: "Michael Myers",
+      d: "Leon Kennedy"
+    }
+  },
+   {
+    question: "What did he say?",
+    image: "gta.gif",
+    correctAnsw: "c",
+    answers: {
+      a: "It's a toy boat",
+      b: "Hello",
+      c: "Davey!",
+      d: "I have a tuberculosis"
+    }
+  },
+  {
+    question: "Who is he?",
+    image: "Simple.gif",
+    correctAnsw: "d",
+    answers: {
+      a: "Idk",
+      b: "Someone",
+      c: "CS2 player",
+      d: "S1mple"
+    }
+  },
+  {
+    question: "Who is he?",
+    image: "images.jpg",
+    correctAnsw: "b",
+    answers: {
+      a: "Toplebald",
+      b: "Toplesgun",
+      c: "No name",
+      d: "Gaben"
+    }
+  },
+];
 
-function checkAnsw(){
-    if (questionIndex >= myQuestions.lenght) return;
+function loadQuestion() {
+  const q = myQuestions[questionIndex];
 
-    let show = document.getElementById('answer');
-    let q = myQuestions[questionIndex];
-    show.innerHTML = q.question;
+  document.getElementById("answer").innerText = q.question;
+  document.querySelector(".first_img img").src = q.image;
+  document.getElementById("result").innerText = "";
 
-    Object.entries(q.answers).forEach(([letter,text]) =>  {
-        const but = document.getElementById(letter);
-        but.innerHTML = text;
-        but.dataset.correct = q.correctAnsw === letter;
-    });
+  Object.entries(q.answers).forEach(([key, text]) => {
+    const btn = document.getElementById(key);
+    btn.innerText = text;
+    btn.disabled = false;
+    btn.dataset.correct = key === q.correctAnsw;
+  });
 }
 
-document.getElementById("next").addEventListener("click", function (e) {
-  const tgt = e.target;
-  if (tgt.tagName === "button") {
+document.querySelectorAll(".answers button").forEach(btn => {
+  btn.addEventListener("click", () => {
     document.getElementById("result").innerText =
-      tgt.dataset.correct === "true" ? "Correct" : "Incorrect";
-  }
+      btn.dataset.correct === "true" ? "Correct " : "Incorrect ";
+
+    document.querySelectorAll(".answers button").forEach(b => b.disabled = true);
+
+    setTimeout(() => {
+      questionIndex++;
+      if (questionIndex < myQuestions.length) {
+        loadQuestion();
+      } else {
+        document.getElementById("answer").innerText = "You are competitive player!!!";
+      }
+    }, 1000);
+  });
 });
+
+loadQuestion();
+
+//Timer function
+function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+    setInterval(function () {
+        minutes = parseInt(timer / 60, 10)
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+            timer = 0;
+        }
+    }, 1000);
+}
+
+window.onload = function () {
+    var time = 60 / 2, 
+        display = document.querySelector('#safeTimerDisplay');
+    startTimer(time, display);
+};
+
+
+//
+
+
