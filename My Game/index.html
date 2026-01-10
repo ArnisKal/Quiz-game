@@ -18,46 +18,84 @@
                 <button type="button" class="header_btn">
                     <i class="fa-solid fa-bars" style="color: #ffffff;"></i>
                 </button>
-                
             </div>
-            
+
             <h1>QUIZZITY</h1>
             
 
             <div class="nav_buttons">
-
-                <button type="button" class="btn" title="Quizes">
-                    Quizes
+                <button class="btn">
+                    <i class="fa-solid fa-gamepad"></i>
+                    <span>Quizes</span>
                 </button>
 
-                <button type="button" class="btn" title="Party">
-                    Party
+                <button class="btn">
+                    <i class="fa-solid fa-people-group"></i>
+                    <span>Party</span>
                 </button>
 
-                <button type="button" class="btn" title="Comunity">
-                    Comunity
+                <button class="btn">
+                    <i class="fa-solid fa-comments"></i>
+                    <span>Community</span>
                 </button>
             </div>
             
 
-            <div>
-                <div>
+           <div class="search_wrapper">
+                <button class="search_toggle" id="searchToggle">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+
+                <div class="search" id="searchBox">
                     <input placeholder="Search for quizes..." class="input">
-
                     <button type="button" class="search_btn">
-                        <i class="fa-solid fa-magnifying-glass" style="color: #ffffff; background-color: transparent;"></i>
-                    </button>  
-
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
                 </div>
             </div>
 
-            <div >
-                <button class="avatar_btn">
-                <i class="fa-solid fa-user"></i>
-                </button>
+            <div class="third">
+               <div class="profile_wrapper">
+                    <button class="avatar_btn" id="profileBtn">
+                        <i class="fa-solid fa-user"></i>
+                    </button>
+
+                    <div class="profile_dropdown" id="profileMenu">
+                        <button>
+                            <i class="fa-solid fa-person"></i>
+                            Profile
+                        </button>
+
+                        <button>
+                            <i class="fa-solid fa-gear"></i>
+                            Settings
+                        </button>
+
+                        <button class="logout_btn"> 
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                            Log out
+                        </button>
+
+                         <button class="logout_btn"> 
+                            <i class="fa-solid fa-thumbs-up"></i>
+                            Liked quizes
+                        </button>
+
+                         <button class="logout_btn"> 
+                            <i class="fa-solid fa-trophy"></i>
+                            Achievements
+                        </button>
+                    </div>
+
+                </div>
             <button class="btn_fabell">
                 <i class="fa-solid fa-bell"></i>
             </button> 
+
+            <button class="mode_btn">
+                <i class="fa-regular fa-moon"></i>
+                Dark
+            </button>
 
         </div>
     </div>
@@ -72,7 +110,7 @@
                     <p>Check them out!</p>
                 </div>
                 <div>
-                    <button type="button" class="content_btn">
+                    <button type="button" class="content_btn" id="startQuizBtn">
                         Start Game
                     </button>
                 </div>

@@ -2,7 +2,41 @@
 document.addEventListener("DOMContentLoaded", () => {
     const page = document.getElementById("page");
     const buttons = document.querySelectorAll(".nav_buttons .btn");
+    const modeBtn = document.querySelector(".mode_btn"); //Dark Mode button
+    const profileBtn = document.getElementById("profileBtn"); //Profile btn 
+    const profileMenu = document.getElementById("profileMenu"); 
+    const startQuizBtn = document.getElementById("startQuizBtn");
+ 
+    //Dropdown open
+    profileBtn.addEventListener("click", (e) => {
+        e.stopPropagation(); 
+        profileMenu.style.display =
+            profileMenu.style.display === "flex" ? "none" : "flex";
+    });
 
+    // Close dropdown 
+    document.addEventListener("click", () => {
+        profileMenu.style.display = "none";
+    });
+
+
+    //Dark Mode
+        if (!modeBtn) {
+            console.error("Dark mode button not found!");
+            return;
+        }
+
+    modeBtn.addEventListener("click", () => {
+        document.body.classList.toggle("dark");
+
+        if (document.body.classList.contains("dark")) {
+            modeBtn.innerHTML = '<i class="fa-regular fa-sun"></i> Light';
+        } else {
+            modeBtn.innerHTML = '<i class="fa-regular fa-moon"></i> Dark';
+        }
+    });
+
+    //HTML for pages
     buttons.forEach(btn => {
         btn.addEventListener("click", () => {
             const section = btn.textContent.trim();
@@ -32,6 +66,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (section === "Party") {
                 page.innerHTML = `
+
+                <div class="party_btn">
+                  <span> Create a party</span>
+                </div>
+
+                 <div class="party_btn">
+                  <span> Join with code</span>
+                </div>
                    
                 `;
             }
@@ -208,8 +250,3 @@ window.onload = function () {
         display = document.querySelector('#safeTimerDisplay');
     startTimer(time, display);
 };
-
-
-//
-
-
