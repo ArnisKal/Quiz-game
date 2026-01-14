@@ -1,12 +1,17 @@
 //Page loading things
 document.addEventListener("DOMContentLoaded", () => {
-    const page = document.getElementById("page");
+    const page = document.getElementById("page"); 
     const buttons = document.querySelectorAll(".nav_buttons .btn");
     const modeBtn = document.querySelector(".mode_btn"); //Dark Mode button
     const profileBtn = document.getElementById("profileBtn"); //Profile btn 
     const profileMenu = document.getElementById("profileMenu"); 
-    const startQuizBtn = document.getElementById("startQuizBtn");
- 
+    const startButton = document.getElementById("startQuizBtn") // Fixed typo: doucument -> document
+
+    //Quiz start button
+    document.getElementById('startQuizBtn').addEventListener('click', function() {
+      window.open('quizes.html', '_blank');
+    });
+  
     //Dropdown open
     profileBtn.addEventListener("click", (e) => {
         e.stopPropagation(); 
@@ -14,25 +19,23 @@ document.addEventListener("DOMContentLoaded", () => {
             profileMenu.style.display === "flex" ? "none" : "flex";
     });
 
-    // Close dropdown 
     document.addEventListener("click", () => {
         profileMenu.style.display = "none";
     });
 
-
     //Dark Mode
-        if (!modeBtn) {
-            console.error("Dark mode button not found!");
-            return;
-        }
+    if (!modeBtn) {
+        console.error("Dark mode button not found!");
+        return;
+    }
 
     modeBtn.addEventListener("click", () => {
         document.body.classList.toggle("dark");
 
         if (document.body.classList.contains("dark")) {
-            modeBtn.innerHTML = '<i class="fa-regular fa-sun"></i> Light';
+            modeBtn.innerHTML = '<i class="fa-solid fa-sun"></i> Light';
         } else {
-            modeBtn.innerHTML = '<i class="fa-regular fa-moon"></i> Dark';
+            modeBtn.innerHTML = '<i class="fa-solid fa-moon"></i> Dark';
         }
     });
 
@@ -43,7 +46,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (section === "Quizes") {
                 page.innerHTML = `
-
                     <button type="button" class="quizes_btn_games"><i class="fa-solid fa-gamepad"></i>Games</button>
                     <button type="button" class="quizes_btn_memes"><i class="fa-solid fa-masks-theater"></i>Memes</button>
                     <button type="button" class="quizes_btn_movies"><i class="fa-solid fa-clapperboard"></i>Movies</button>
@@ -66,7 +68,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (section === "Party") {
                 page.innerHTML = `
-
                 <div class="party_btn">
                   <span> Create a party</span>
                 </div>
@@ -74,13 +75,21 @@ document.addEventListener("DOMContentLoaded", () => {
                  <div class="party_btn">
                   <span> Join with code</span>
                 </div>
-                   
                 `;
             }
 
-            if (section === "Comunity") {
+            if (section === "Community") {
                 page.innerHTML = `
-                    
+                    <div>
+                      <div class="category_btn">
+                        <button type="button" class="btn_choose">Memes</button>
+                        <button type="button" class="btn_choose">Video Games</button>
+                      </div>  
+
+                      <div> 
+                        <input type="text" class="com_input" placeholder="Write a review"> 
+                      </div>
+                    </div> 
                 `;
             }
         });
@@ -89,6 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //Correct answers things
 let questionIndex = 0;
+let timerInterval = null; // Store timer interval
 
 const myQuestions = [
   {
@@ -124,7 +134,7 @@ const myQuestions = [
       d: "Trevor"
     }
   },
-   {
+  {
     question: "Who is this?",
     image: "CakeBaker.png",
     correctAnsw: "d",
@@ -135,7 +145,7 @@ const myQuestions = [
       d: "CakeBaker"
     }
   },
-   {
+  {
     question: "What is this game?",
     image: "CS2.jpg",
     correctAnsw: "a",
@@ -146,7 +156,7 @@ const myQuestions = [
       d: "Diablo 3"
     }
   },
-   {
+  {
     question: "Who is this?",
     image: "Michael.jpg",
     correctAnsw: "c",
@@ -157,7 +167,7 @@ const myQuestions = [
       d: "Leon Kennedy"
     }
   },
-   {
+  {
     question: "What did he say?",
     image: "gta.gif",
     correctAnsw: "c",
@@ -192,6 +202,51 @@ const myQuestions = [
   },
 ];
 
+//Start timer
+function startQuestionTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+
+  let timeLeft = 20;
+  const display = document.querySelector('#safeTimerDisplay');
+  
+  display.textContent = formatTime(timeLeft);
+
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    display.textContent = formatTime(timeLeft);
+
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      document.getElementById("result").innerText = "Time's up!";
+      document.querySelectorAll(".answers button").forEach(b => b.disabled = true);
+      
+      setTimeout(() => {
+        nextQuestion();
+      }, 1000);
+    }
+  }, 1000);
+}
+
+function formatTime(seconds) {
+  const minutes = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+}
+
+// Move to next question
+function nextQuestion() {
+  questionIndex++;
+  if (questionIndex < myQuestions.length) {
+    loadQuestion();
+  } else {
+    clearInterval(timerInterval);
+    document.getElementById("answer").innerText = "You are competitive player!!!";
+    document.querySelector('#safeTimerDisplay').textContent = "00:00";
+  }
+}
+
 function loadQuestion() {
   const q = myQuestions[questionIndex];
 
@@ -205,48 +260,24 @@ function loadQuestion() {
     btn.disabled = false;
     btn.dataset.correct = key === q.correctAnsw;
   });
+  startQuestionTimer();
 }
 
 document.querySelectorAll(".answers button").forEach(btn => {
   btn.addEventListener("click", () => {
+    clearInterval(timerInterval);
+    
     document.getElementById("result").innerText =
-      btn.dataset.correct === "true" ? "Correct " : "Incorrect ";
+      btn.dataset.correct === "true" ? "Correct ✓" : "Incorrect ✗";
 
     document.querySelectorAll(".answers button").forEach(b => b.disabled = true);
 
     setTimeout(() => {
-      questionIndex++;
-      if (questionIndex < myQuestions.length) {
-        loadQuestion();
-      } else {
-        document.getElementById("answer").innerText = "You are competitive player!!!";
-      }
+      nextQuestion();
     }, 1000);
   });
 });
 
 loadQuestion();
 
-//Timer function
-function startTimer(duration, display) {
-    var timer = duration, minutes, seconds;
-    setInterval(function () {
-        minutes = parseInt(timer / 60, 10)
-        seconds = parseInt(timer % 60, 10);
 
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
-
-        display.textContent = minutes + ":" + seconds;
-
-        if (--timer < 0) {
-            timer = 0;
-        }
-    }, 1000);
-}
-
-window.onload = function () {
-    var time = 60 / 2, 
-        display = document.querySelector('#safeTimerDisplay');
-    startTimer(time, display);
-};
