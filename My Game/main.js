@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const modeBtn = document.querySelector(".mode_btn"); //Dark Mode button
     const profileBtn = document.getElementById("profileBtn"); //Profile btn 
     const profileMenu = document.getElementById("profileMenu"); 
-    const startButton = document.getElementById("startQuizBtn") // Fixed typo: doucument -> document
+    const startButton = document.getElementById("startQuizBtn") 
 
     //Quiz start button
     document.getElementById('startQuizBtn').addEventListener('click', function() {
@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //Correct answers things
 let questionIndex = 0;
-let timerInterval = null; // Store timer interval
+let timerInterval = null; 
 
 const myQuestions = [
   {
