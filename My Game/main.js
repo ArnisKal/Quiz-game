@@ -268,7 +268,7 @@ document.querySelectorAll(".answers button").forEach(btn => {
     clearInterval(timerInterval);
     
     document.getElementById("result").innerText =
-      btn.dataset.correct === "true" ? "Correct ✓" : "Incorrect ✗";
+      btn.dataset.correct === "true" ? "Correct" : "Incorrect";
 
     document.querySelectorAll(".answers button").forEach(b => b.disabled = true);
 
